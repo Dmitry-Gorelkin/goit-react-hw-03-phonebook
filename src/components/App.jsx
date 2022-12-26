@@ -29,14 +29,22 @@ export class App extends Component {
   };
 
   componentDidMount() {
+    const contacts = localStorage.getItem('contacts');
+
     try {
+      if (contacts) {
+        this.setState({
+          contacts: JSON.parse(contacts),
+        });
+        return;
+      }
+
       this.setState({
-        contacts:
-          JSON.parse(localStorage.getItem('contacts')).length > 0
-            ? JSON.parse(localStorage.getItem('contacts'))
-            : [],
+        contacts: [],
       });
-    } catch (error) {}
+    } catch (error) {
+      console.log(error);
+    }
   }
 
   componentDidUpdate(_, prevState) {
